@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>그린그라운드 (GreenGround 9) - 1등가자 학교 인프라 개선 프로젝트</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts (Noto Sans KR & Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        },
+                        skybrand: {
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        },
+                        sand: {
+                            100: '#fef3c7',
+                            400: '#fbbf24',
+                            600: '#d97706',
+                            800: '#92400e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #059669;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(5, 150, 105, 0.4);
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printableProposalModal, #printableProposalModal * {
+                visibility: visible;
+            }
+            #printableProposalModal {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 20px;
+                background: white;
+                box-shadow: none;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-emerald-200 selection:text-emerald-900">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Logo & SDG Badge -->
+                <div class="flex items-center gap-3">
+                    <a href="#" class="flex items-center gap-2 group">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-sky-500 flex items-center justify-center text-white text-xl font-black shadow-md shadow-emerald-200 group-hover:scale-105 transition-transform">
+                            <i class="fa-solid font-bold fa-leaf"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-600 via-sky-600 to-emerald-800 bg-clip-text text-transparent">
+                                그린그라운드
+                            </span>
+                            <span class="text-[10px] font-bold text-slate-400 tracking-wider">GREEN GROUND 9</span>
+                        </div>
+                    </a>
+                    <span class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                        <i class="fa-solid fa-trophy mr-1 text-amber-500"></i> 팀 1등가자
+                    </span>
+                    <span class="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                        <i class="fa-solid fa-city mr-1"></i> SDGs Goal 9 학교 인프라
+                    </span>
+                </div>
+
+                <!-- Nav Links -->
+                <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600">
+                    <a href="#simulator" class="hover:text-emerald-600 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-wind text-sky-500"></i> 바람 시뮬레이터</a>
+                    <a href="#calculator" class="hover:text-emerald-600 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-calculator text-emerald-500"></i> 개선 효과 계산기</a>
+                    <a href="#risk-check" class="hover:text-emerald-600 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-amber-500"></i> 위험도 진단</a>
+                    <a href="#case-studies" class="hover:text-emerald-600 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-trophy text-amber-500"></i> 전환 성공 사례</a>
+                    <a href="#petition" class="hover:text-emerald-600 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-file-signature text-purple-500"></i> 학생 서명운동</a>
+                    <a href="#ethics" class="hover:text-emerald-600 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-hand-holding-heart text-rose-500"></i> 윤리 가이드</a>
+                </nav>
+
+                <!-- CTA Button -->
+                <div class="flex items-center gap-2">
+                    <button onclick="openProposalModal()" class="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 shadow-sm hover:shadow-md transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-file-contract"></i>
+                        <span>제안서 생성</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-sky-50 via-emerald-50/40 to-slate-50 pt-10 pb-16">
+        <!-- Background decorative vectors -->
+        <div class="absolute -top-12 -right-12 w-96 h-96 bg-emerald-200/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/2 -left-20 w-80 h-80 bg-sky-200/40 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Left Text Info -->
+                <div class="lg:col-span-7 text-left space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white shadow-sm border border-emerald-200 text-xs font-bold text-emerald-700">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                        SDGs #9: 지속가능한 학교 기초 인프라 구축 프로젝트
+                    </div>
+                    
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 leading-tight tracking-tight">
+                        날리는 모래 먼지 그만! <br>
+                        <span class="bg-gradient-to-r from-emerald-600 to-sky-600 bg-clip-text text-transparent">
+                            푸른 잔디 운동장
+                        </span>으로 <br class="hidden sm:inline">학교를 안전하게 바꿔요
+                    </h1>
+
+                    <p class="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl">
+                        운동장의 모래 먼지는 학생들의 눈 건강(결막염, 이물감)을 위협하고 교실 환경까지 해칩니다. 
+                        <strong>팀 '1등가자'</strong>는 친환경 잔디 교체를 통해 학생과 지역 주민 모두가 안전하게 이용할 수 있는 지속가능한 인프라를 제안합니다.
+                    </p>
+
+                    <!-- Stats Badges -->
+                    <div class="grid grid-cols-3 gap-3 sm:gap-4 pt-2 max-w-xl">
+                        <div class="p-3 bg-white/80 rounded-2xl border border-slate-200/80 shadow-sm text-center">
+                            <span class="block text-2xl font-black text-amber-600" id="heroDustStat">98.5%</span>
+                            <span class="text-xs text-slate-500 font-medium">모래 먼지 감소</span>
+                        </div>
+                        <div class="p-3 bg-white/80 rounded-2xl border border-slate-200/80 shadow-sm text-center">
+                            <span class="block text-2xl font-black text-emerald-600" id="heroEyeStat">A등급</span>
+                            <span class="text-xs text-slate-500 font-medium">눈 건강 안전지수</span>
+                        </div>
+                        <div class="p-3 bg-white/80 rounded-2xl border border-slate-200/80 shadow-sm text-center">
+                            <span class="block text-2xl font-black text-sky-600" id="heroSatisfyStat">98점</span>
+                            <span class="text-xs text-slate-500 font-medium">학생 만족도</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <a href="#petition" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-pen-nib"></i> 서명 운동 참여하기
+                        </a>
+                        <a href="#simulator" class="px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-xl border border-slate-300 shadow-sm transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-play text-sky-500"></i> 바람 시뮬레이션
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Hero Image / Card Preview -->
+                <div class="lg:col-span-5">
+                    <div class="relative mx-auto max-w-md lg:max-w-none rounded-3xl p-4 bg-white/60 border border-white shadow-xl backdrop-blur-md">
+                        <div class="relative overflow-hidden rounded-2xl bg-slate-900 aspect-[4/3] flex items-center justify-center group">
+                            <!-- Visual comparison preview banner -->
+                            <img src="https://images.unsplash.com/photo-1529900748604-07564a03e7a6?auto=format&fit=crop&w=800&q=80" alt="학교 운동장" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" onerror="this.src='https://placehold.co/800x600/10b981/ffffff?text=GreenGround+SDGs+9'">
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-5 text-white">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="px-2 py-0.5 bg-emerald-500 text-white text-[11px] font-bold rounded">비교 인프라</span>
+                                    <span class="text-xs text-emerald-200">모래 vs 친환경 잔디</span>
+                                </div>
+                                <h3 class="text-lg font-bold">학교 운동장 환경 비교 시뮬레이터</h3>
+                                <p class="text-xs text-slate-300">바람 강도에 따라 학생들의 눈으로 침투하는 먼지를 직관적으로 확인해보세요.</p>
+                            </div>
+                        </div>
+
+                        <!-- Mini Info Badge -->
+                        <div class="absolute -bottom-4 -left-4 bg-white p-3.5 rounded-2xl shadow-lg border border-slate-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-eye-slash"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-800">모래 먼지 안구 침투 문제</p>
+                                <p class="text-[11px] text-slate-500">학생 87% "바람 불면 눈이 아파요"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 1: Visual Wind Simulator -->
+    <section id="simulator" class="py-16 bg-white border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-bold uppercase tracking-wider">핵심 기능 1</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">모래 vs 잔디 바람 영향 시뮬레이터</h2>
+                <p class="text-slate-600 mt-2 text-sm sm:text-base">
+                    슬라이더를 조절해 풍속을 올려보세요. 모래 운동장에서는 미세입자가 휘날려 교실과 학생 눈에 침투하지만, 잔디 운동장은 비산 먼지를 차단합니다.
+                </p>
+            </div>
+
+            <!-- Canvas Container & Controls -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Simulator Controls & Settings -->
+                <div class="lg:col-span-4 bg-slate-50 p-6 rounded-3xl border border-slate-200 space-y-6">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-emerald-600"></i> 시뮬레이션 설정
+                    </h3>
+
+                    <!-- Ground Type Toggle -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase mb-2">운동장 유형 선택</label>
+                        <div class="grid grid-cols-2 gap-2 p-1 bg-slate-200/80 rounded-2xl">
+                            <button id="btnSandType" onclick="setGroundType('sand')" class="py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 bg-amber-500 text-white shadow-sm">
+                                <i class="fa-solid fa-mound"></i> 모래 운동장
+                            </button>
+                            <button id="btnGrassType" onclick="setGroundType('grass')" class="py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:text-slate-900">
+                                <i class="fa-solid fa-leaf text-emerald-500"></i> 친환경 잔디
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Wind Speed Slider -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-bold text-slate-600 uppercase">바람 속도 (풍속)</label>
+                            <span id="windSpeedValue" class="text-sm font-extrabold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200">5.0 m/s</span>
+                        </div>
+                        <input type="range" id="windSlider" min="0" max="12" step="0.5" value="5" oninput="updateWindSpeed(this.value)" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer custom-slider">
+                        <div class="flex justify-between text-[11px] text-slate-400 mt-1 font-medium">
+                            <span>0m/s (고요함)</span>
+                            <span>6m/s (흔들림)</span>
+                            <span>12m/s (강풍)</span>
+                        </div>
+                    </div>
+
+                    <!-- Live Risk Status Card -->
+                    <div id="simRiskCard" class="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 space-y-1">
+                        <div class="flex items-center gap-2 font-bold text-sm">
+                            <i id="simRiskIcon" class="fa-solid fa-triangle-exclamation text-amber-600"></i>
+                            <span id="simRiskTitle">경고: 안구 이물질 위험</span>
+                        </div>
+                        <p id="simRiskDesc" class="text-xs text-amber-800 leading-relaxed">
+                            강한 바람으로 모래 먼지가 비산되어 학생들의 안구 건조 및 상처 유발 위험이 높습니다.
+                        </p>
+                    </div>
+
+                    <!-- Canvas Quick Info -->
+                    <div class="grid grid-cols-2 gap-3 text-center text-xs font-bold">
+                        <div class="p-3 bg-white rounded-xl border border-slate-200">
+                            <span class="text-slate-400 block text-[10px]">공기 중 비산 먼지</span>
+                            <span id="dustParticleCount" class="text-base text-amber-600 font-extrabold">128 particles</span>
+                        </div>
+                        <div class="p-3 bg-white rounded-xl border border-slate-200">
+                            <span class="text-slate-400 block text-[10px]">학생 눈 침투 위험도</span>
+                            <span id="eyeDangerScore" class="text-base text-red-600 font-extrabold">75% (위험)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation Canvas Display -->
+                <div class="lg:col-span-8 bg-slate-900 rounded-3xl p-4 shadow-2xl relative overflow-hidden flex flex-col justify-between">
+                    <!-- Canvas header badges -->
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-3 px-2 z-10">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></span>
+                            <span class="text-xs font-mono text-slate-300">LIVE SIMULATION CANVAS</span>
+                        </div>
+                        <span id="canvasModeLabel" class="px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold rounded-full">
+                            기존 인프라: 모래 운동장
+                        </span>
+                    </div>
+
+                    <!-- Canvas -->
+                    <div class="relative w-full aspect-[16/9] bg-slate-950 rounded-2xl overflow-hidden border border-slate-800">
+                        <canvas id="simCanvas" class="w-full h-full block"></canvas>
+                        
+                        <!-- Overlay Text Banner -->
+                        <div id="canvasOverlay" class="absolute top-4 left-4 pointer-events-none bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-700/50 text-white text-xs space-y-0.5">
+                            <p class="font-bold flex items-center gap-1.5 text-amber-400">
+                                <i class="fa-solid fa-wind"></i> 풍속: <span id="canvasWindText">5.0 m/s</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 px-2 flex justify-between items-center text-xs text-slate-400 font-mono">
+                        <span><i class="fa-solid fa-school text-emerald-400"></i> 교실 및 운동장 구역</span>
+                        <span>SDGs Goal #9 - Sustainable School Infrastructure</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: Impact & Budget Calculator -->
+    <section id="calculator" class="py-16 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider">핵심 기능 2</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">운동장 인프라 개선 효과 계산기</h2>
+                <p class="text-slate-600 mt-2 text-sm sm:text-base">
+                    우리 학교 운동장 면적($m^2$)과 전교생 수를 입력하여 친환경 잔디 교체 시의 먼지 감소율, 안구 건강 개선 지수를 즉시 계산해보세요.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <!-- Inputs -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <h3 class="text-lg font-bold text-slate-800 border-b pb-3">학교 규모 데이터 입력</h3>
+
+                        <!-- Field Area Input -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-sm font-bold text-slate-700">운동장 면적 ($m^2$)</label>
+                                <span id="areaValText" class="text-sm font-extrabold text-emerald-600">1,500 m²</span>
+                            </div>
+                            <input type="range" id="areaSlider" min="300" max="5000" step="100" value="1500" oninput="calculateImpact()" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer custom-slider">
+                            <p class="text-[11px] text-slate-400 mt-1">일반 초·중·고 운동장 평균: 약 1,000~2,500 $m^2$</p>
+                        </div>
+
+                        <!-- Students Count Input -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-sm font-bold text-slate-700">전교생 수 (명)</label>
+                                <span id="studentValText" class="text-sm font-extrabold text-sky-600">600 명</span>
+                            </div>
+                            <input type="range" id="studentSlider" min="50" max="2000" step="50" value="600" oninput="calculateImpact()" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer custom-slider">
+                        </div>
+
+                        <!-- Quick presets buttons -->
+                        <div class="pt-2">
+                            <label class="block text-xs font-bold text-slate-500 mb-2">빠른 학교 예시 적용</label>
+                            <div class="flex gap-2">
+                                <button onclick="setCalcPreset(800, 350)" class="px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold hover:bg-slate-50">소규모 학교</button>
+                                <button onclick="setCalcPreset(1500, 650)" class="px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold hover:bg-slate-50">중규모 학교</button>
+                                <button onclick="setCalcPreset(3000, 1200)" class="px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold hover:bg-slate-50">대규모 학교</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculated Metrics Output Grid -->
+                    <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        
+                        <!-- Metric 1: Dust Reduction -->
+                        <div class="p-5 rounded-2xl bg-emerald-50/80 border border-emerald-200 space-y-2 relative overflow-hidden">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-emerald-200">
+                                <i class="fa-solid fa-cloud-arrow-down"></i>
+                            </div>
+                            <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider block">연간 비산 먼지 감축량</span>
+                            <div class="text-2xl sm:text-3xl font-black text-emerald-900" id="calcDustResult">
+                                412.5 kg/연
+                            </div>
+                            <p class="text-xs text-emerald-700">교실 내 먼지 유입량 약 <strong>88% 감소</strong> 효과</p>
+                        </div>
+
+                        <!-- Metric 2: Eye Health Protection -->
+                        <div class="p-5 rounded-2xl bg-sky-50/80 border border-sky-200 space-y-2 relative overflow-hidden">
+                            <div class="w-10 h-10 rounded-xl bg-sky-500 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-sky-200">
+                                <i class="fa-solid fa-eye"></i>
+                            </div>
+                            <span class="text-xs font-bold text-sky-800 uppercase tracking-wider block">학생 안구 안전 지수</span>
+                            <div class="text-2xl sm:text-3xl font-black text-sky-900" id="calcEyeResult">
+                                98.4 점 (A+)
+                            </div>
+                            <p class="text-xs text-sky-700">안구 이물감 및 결막염 위험 요소 근본적 차단</p>
+                        </div>
+
+                        <!-- Metric 3: Protected Student Days -->
+                        <div class="p-5 rounded-2xl bg-amber-50/80 border border-amber-200 space-y-2 relative overflow-hidden">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-amber-200">
+                                <i class="fa-solid fa-person-running"></i>
+                            </div>
+                            <span class="text-xs font-bold text-amber-800 uppercase tracking-wider block">연간 안심 체육 활동 시간</span>
+                            <div class="text-2xl sm:text-3xl font-black text-amber-900" id="calcHoursResult">
+                                + 180 시간
+                            </div>
+                            <p class="text-xs text-amber-700">바람 불어도 체육 수업 취소 없이 정상 진행</p>
+                        </div>
+
+                        <!-- Metric 4: Satisfaction Index -->
+                        <div class="p-5 rounded-2xl bg-purple-50/80 border border-purple-200 space-y-2 relative overflow-hidden">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-purple-200">
+                                <i class="fa-solid fa-face-smile"></i>
+                            </div>
+                            <span class="text-xs font-bold text-purple-800 uppercase tracking-wider block">학교 만족도 예상 상승</span>
+                            <div class="text-2xl sm:text-3xl font-black text-purple-900" id="calcSatisfyResult">
+                                96.5 %
+                            </div>
+                            <p class="text-xs text-purple-700">학생, 교직원, 학부모 및 지역 주민 종합 호응도</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: Today's Risk Diagnostic Tool -->
+    <section id="risk-check" class="py-16 bg-white border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold uppercase tracking-wider">핵심 기능 3</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">오늘의 운동장 비산먼지 위험도 진단</h2>
+                <p class="text-slate-600 mt-2 text-sm sm:text-base">
+                    바람 세기와 가상 날씨 조건을 설정하여 모래 운동장과 잔디 운동장의 안전성 차이를 진단하세요.
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+                
+                <!-- Weather Preset Selector -->
+                <div class="flex flex-wrap justify-center gap-3 mb-8">
+                    <button onclick="setWeatherPreset('calm', 2.0)" class="weather-btn active px-4 py-2.5 rounded-2xl border font-bold text-xs sm:text-sm transition-all flex items-center gap-2 bg-white text-slate-800 border-emerald-500 shadow-sm">
+                        <i class="fa-solid fa-sun text-amber-500"></i> 온화한 날 (2 m/s)
+                    </button>
+                    <button onclick="setWeatherPreset('breeze', 5.5)" class="weather-btn px-4 py-2.5 rounded-2xl border font-bold text-xs sm:text-sm transition-all flex items-center gap-2 bg-white text-slate-800 border-slate-200">
+                        <i class="fa-solid fa-wind text-sky-500"></i> 바람 살랑이는 날 (5.5 m/s)
+                    </button>
+                    <button onclick="setWeatherPreset('strong', 9.5)" class="weather-btn px-4 py-2.5 rounded-2xl border font-bold text-xs sm:text-sm transition-all flex items-center gap-2 bg-white text-slate-800 border-slate-200">
+                        <i class="fa-solid fa-tornado text-red-500"></i> 강풍 부는 날 (9.5 m/s)
+                    </button>
+                </div>
+
+                <!-- Side by Side Risk Comparison Card -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Sand Playground Risk Box -->
+                    <div class="bg-amber-50/90 rounded-2xl p-6 border border-amber-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between border-b border-amber-200/80 pb-3 mb-4">
+                                <span class="font-extrabold text-amber-900 text-base flex items-center gap-2">
+                                    <i class="fa-solid fa-mound text-amber-600"></i> 모래 운동장 상태
+                                </span>
+                                <span id="sandRiskBadge" class="px-2.5 py-1 rounded-full bg-red-500 text-white text-xs font-bold">
+                                    주의 / 위험
+                                </span>
+                            </div>
+                            <ul class="space-y-3 text-xs sm:text-sm text-amber-950 font-medium">
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-circle-xmark text-red-500 mt-0.5"></i>
+                                    <span id="sandRiskDesc1">눈 이물질 유입 위험으로 보호안경 및 마스크 필요</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-circle-xmark text-red-500 mt-0.5"></i>
+                                    <span id="sandRiskDesc2">교실 창문 개방 불가 (실내 먼지 쌓임 문제 발생)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-circle-xmark text-red-500 mt-0.5"></i>
+                                    <span>체육 수업 후 눈 비빔 증상 및 인후통 호소 가능</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-amber-200/60 text-xs font-bold text-red-700 flex items-center gap-1.5">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            권장 사항: <span id="sandActionRec">야외 체육활동 자제 권고</span>
+                        </div>
+                    </div>
+
+                    <!-- Grass Playground Safe Box -->
+                    <div class="bg-emerald-50/90 rounded-2xl p-6 border border-emerald-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between border-b border-emerald-200/80 pb-3 mb-4">
+                                <span class="font-extrabold text-emerald-900 text-base flex items-center gap-2">
+                                    <i class="fa-solid fa-leaf text-emerald-600"></i> 친환경 잔디 운동장
+                                </span>
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-600 text-white text-xs font-bold">
+                                    안전 / 최적
+                                </span>
+                            </div>
+                            <ul class="space-y-3 text-xs sm:text-sm text-emerald-950 font-medium">
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5"></i>
+                                    <span>비산 먼지 제로 - 안구 자극 없이 안전한 신체 활동</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5"></i>
+                                    <span>넘어져도 찰과상 위험이 적은 완충 효과 제공</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5"></i>
+                                    <span>쾌적한 실내 교실 공기질 유지 가능</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-emerald-200/60 text-xs font-bold text-emerald-800 flex items-center gap-1.5">
+                            <i class="fa-solid fa-thumbs-up"></i>
+                            권장 사항: 정상 야외 체육활동 및 자유 놀이 권장
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Real-World Case Studies & Key Advantages -->
+    <section id="case-studies" class="py-16 bg-gradient-to-b from-emerald-50/50 via-slate-50 to-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider">실제 변화 사례</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">잔디 운동장으로 바뀐 실제 사례 & 핵심 장점</h2>
+                <p class="text-slate-600 mt-2 text-sm sm:text-base">
+                    모래에서 친환경 잔디로 인프라를 바꾼 실제 학교들의 데이터와 학생·교사·학부모의 인터뷰 사례를 확인해보세요.
+                </p>
+            </div>
+
+            <!-- Top 4 Key Advantages Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow space-y-3">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-eye-shield"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-800">1. 눈 안구 질환 완벽 예방</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        바람이 불어도 먼지가 눈에 들어가지 않아 결막염, 이물감, 안구 건조증 호소 비율이 <strong>90% 이상 급감</strong>했습니다.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow space-y-3">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-band-aid"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-800">2. 찰과상 부상 위험 감소</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        뛰어놀다 넘어져도 잔디 쿠션감이 충격을 완화해 무릎·팔꿈치 까짐 등 찰과상 부상 건수가 <strong>75% 감소</strong>했습니다.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow space-y-3">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-wind"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-800">3. 쾌적한 실내 교실 환경</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        신발과 옷에 묻어 들어오는 모래 먼지가 사라져 실내 교실 미세먼지 농도가 <strong>82% 저감</strong>되었습니다.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow space-y-3">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-futbol"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-800">4. 체육 참여율 2배 증가</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        바람 부는 날에도 야외 활동이 가능해져 학생들의 자발적 신체 활동 및 체육 수업 참여도가 크게 상향되었습니다.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Detailed Case Study Cards -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Case 1 -->
+                <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full">사례 1: A 초등학교</span>
+                            <span class="text-xs text-slate-400 font-semibold"><i class="fa-solid fa-location-dot"></i> 서울</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900">"양호실 찾는 먼지 관련 눈 질환 환자가 0건으로 줄었어요"</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            강풍 시 모래 먼지로 인해 체육 수업 중 눈을 비비며 양호실로 오던 학생이 매달 50여 명에 달했으나, 친환경 잔디 교체 후 안질환 방문 건수가 완전히 사라졌습니다.
+                        </p>
+                    </div>
+                    <div class="p-4 bg-slate-50 border-t border-slate-100 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-xs">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <div class="text-xs">
+                            <strong class="block text-slate-800">A초등학교 보건교사 인터뷰</strong>
+                            <span class="text-slate-500">"학생들 눈 건강 보호에 가장 확실한 투자입니다."</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 2 -->
+                <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 bg-sky-100 text-sky-800 text-xs font-bold rounded-full">사례 2: B 중학교</span>
+                            <span class="text-xs text-slate-400 font-semibold"><i class="fa-solid fa-location-dot"></i> 경기</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900">"넘어져도 안 아파서 축구를 마음껏 즐길 수 있어요!"</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            과거 모래 운동장에서는 슬라이딩 시 타박상과 피부 상처 위험으로 태클이나 활발한 운동을 자제했으나, 잔디 조성 후 신체 활동 불안감이 완벽히 해소되었습니다.
+                        </p>
+                    </div>
+                    <div class="p-4 bg-slate-50 border-t border-slate-100 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-sky-500 text-white flex items-center justify-center font-bold text-xs">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div class="text-xs">
+                            <strong class="block text-slate-800">B중학교 학생회장 인터뷰</strong>
+                            <span class="text-slate-500">"체육 시간이 매일 기다려져요!"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 3 -->
+                <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs font-bold rounded-full">사례 3: C 고등학교</span>
+                            <span class="text-xs text-slate-400 font-semibold"><i class="fa-solid fa-location-dot"></i> 충남</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900">"창문을 열어도 교실 책상에 모래가 쌓이지 않습니다"</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            봄·가을철 환기 시 교실 책상과 창틀에 까칠한 모래 먼지가 겹겹이 쌓이던 문제가 해결되어 학습 집중도와 학부모 만족도가 최고 수치를 기록했습니다.
+                        </p>
+                    </div>
+                    <div class="p-4 bg-slate-50 border-t border-slate-100 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold text-xs">
+                            <i class="fa-solid fa-house-chimney-window"></i>
+                        </div>
+                        <div class="text-xs">
+                            <strong class="block text-slate-800">C고등학교 학부모 대표 인터뷰</strong>
+                            <span class="text-slate-500">"아이들 옷도 깨끗해지고 실내 공기도 좋아졌어요."</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: Petition Drive & Student Voice Box -->
+    <section id="petition" class="py-16 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold uppercase tracking-wider">핵심 기능 4</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">운동장 인프라 개선 서명운동 & 한줄 의견함</h2>
+                <p class="text-slate-600 mt-2 text-sm sm:text-base">
+                    우리 학교 운동장 환경 개선에 동의하는 서명과 생생한 의견을 남겨주세요. 모인 서명은 교장선생님과 교육청 건의서 데이터로 활용됩니다.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Petition Progress & Form -->
+                <div class="lg:col-span-5 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                    
+                    <!-- Progress Card -->
+                    <div class="bg-gradient-to-br from-emerald-500 to-sky-600 p-6 rounded-2xl text-white space-y-3 shadow-md">
+                        <div class="flex justify-between items-center text-xs font-bold tracking-wider">
+                            <span>목표 서명 달성률</span>
+                            <span id="petitionTargetPercent" class="text-amber-300 text-sm">76.8%</span>
+                        </div>
+                        <div class="flex items-baseline gap-2">
+                            <span id="currentSignCount" class="text-4xl font-black">384</span>
+                            <span class="text-sm opacity-90 font-medium">/ 목표 500 명 서명 달성</span>
+                        </div>
+                        <!-- Progress bar -->
+                        <div class="w-full h-3 bg-black/20 rounded-full overflow-hidden p-0.5">
+                            <div id="petitionProgressBar" class="h-full bg-amber-300 rounded-full transition-all duration-500" style="width: 76.8%;"></div>
+                        </div>
+                        <p class="text-[11px] opacity-80 pt-1">
+                            <i class="fa-solid fa-circle-info"></i> 서명이 500명에 도달하면 교장선생님 및 교육청 제출용 공식 제안서가 채택됩니다.
+                        </p>
+                    </div>
+
+                    <!-- Petition Form -->
+                    <form id="petitionForm" onsubmit="handlePetitionSubmit(event)" class="space-y-4">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-signature text-purple-600"></i> 서명 참여하기
+                        </h3>
+
+                        <!-- Anonymous Toggle Option -->
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200">
+                            <span class="text-xs font-bold text-slate-700">익명 참여 여부</span>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="anonCheck" onchange="toggleAnonInput(this.checked)" class="sr-only peer">
+                                <div class="relative w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                            </label>
+                        </div>
+
+                        <!-- Name or Grade Input -->
+                        <div id="nameInputGroup">
+                            <label class="block text-xs font-bold text-slate-600 mb-1">소속 및 이름 (예: 2학년 3반 김학생, 교직원, 학부모)</label>
+                            <input type="text" id="signerName" required placeholder="예: 3학년 1반 이민우" class="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+
+                        <!-- Message Input -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">건의 및 한줄 응원 메시지</label>
+                            <textarea id="signerMessage" required rows="3" placeholder="예: 바람 불 때마다 눈이 너무 아파요! 빨리 잔디 운동장으로 바꿔주세요." class="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"></textarea>
+                        </div>
+
+                        <div class="text-[11px] text-slate-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-lock text-slate-400"></i> 개인정보 윤리보호: 이름 및 의견은 학교 인프라 개선 건의 목적으로만 활용됩니다.
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> 서명 제출 및 등록하기
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Live Signature Board -->
+                <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col h-[520px]">
+                    <div class="flex items-center justify-between mb-4 border-b pb-3">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-comments text-sky-500"></i> 실시간 학생 & 주민 의견 목록
+                        </h3>
+                        <span class="text-xs text-slate-500 font-medium">최신순 업데이트</span>
+                    </div>
+
+                    <!-- Scrollable List -->
+                    <div id="petitionList" class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+                        <!-- Dynamic items rendered via JS -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: SDGs Goal 9 & Ethics Section -->
+    <section id="ethics" class="py-16 bg-white border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-bold uppercase tracking-wider">윤리 및 SDGs 학습</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">지속가능한 인프라 혁신과 윤리 가이드라인</h2>
+                <p class="text-slate-600 mt-2 text-sm sm:text-base">
+                    UN SDGs 9번 목표(산업의 성장, 혁신 활성화 및 사회기반시설 구축)를 학교 현장에 실천하는 원칙입니다.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200 space-y-3">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-city"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">SDGs Goal 9 학교 실천</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        거창한 산업 시설뿐만 아니라 학생들이 매일 이용하는 학교 운동장도 중요한 사회기반시설(Infrastructure)입니다. 모두를 위해 지속가능하고 안전한 인프라로 혁신해야 합니다.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200 space-y-3">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">개인정보 보호 원칙</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        서명 운동 참여 시 실명 대신 익명 표기 옵션을 기본 제공하며, 최소한의 정보만을 수집하여 개인의 비공개 의사를 적극적으로 존중합니다.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200 space-y-3">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-hands-holding-circle"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">건전한 민주적 소통 문화</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        비속어나 타인 비방 문구는 자동으로 스크리닝됩니다. 건강하고 건설적인 안건 제안을 통해 학교와 교육청의 긍정적 변화를 이끌어냅니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-800 pb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500 text-white flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <span class="text-lg font-bold text-white">그린그라운드 (GreenGround 9)</span>
+                    <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">팀명: 1등가자</span>
+                </div>
+                <p class="text-xs text-slate-400">
+                    SDGs Goal 9: Industry, Innovation, and Infrastructure (산업의 성장, 혁신 활성화 및 사회기반시설 구축)
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
+                <p>© 2026 그린그라운드 프로젝트 팀 '1등가자'. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#simulator" class="hover:text-white">시뮬레이터</a>
+                    <a href="#calculator" class="hover:text-white">계산기</a>
+                    <a href="#petition" class="hover:text-white">서명운동</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PROPOSAL GENERATOR MODAL (Print View) -->
+    <div id="proposalModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 p-6 sm:p-10 relative space-y-6 my-auto" id="printableProposalModal">
+            
+            <!-- Modal Close Header -->
+            <div class="flex justify-between items-center border-b pb-4 no-print">
+                <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-full">공식 건의서 모달</span>
+                    <span class="text-xs text-slate-500">교장선생님 / 교육청 제출용</span>
+                </div>
+                <button onclick="closeProposalModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Official Document Content -->
+            <div class="space-y-6 text-slate-800">
+                <div class="text-center border-b-2 border-slate-900 pb-6 space-y-2">
+                    <span class="text-xs font-bold tracking-widest text-emerald-700 uppercase">UN 지속가능발전목표 (SDGs #9) 기반 학교 인프라 혁신 건의</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900">학교 운동장 잔디 인프라 교체 제안서</h2>
+                    <p class="text-xs text-slate-500">수신: 학교장 및 시·도교육청 시설과 담당자 귀하</p>
+                </div>
+
+                <!-- Summary Meta -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs">
+                    <div>
+                        <span class="text-slate-400 block">제안 팀</span>
+                        <strong class="text-slate-800">1등가자</strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block">대상 운동장 면적</span>
+                        <strong id="modalPropArea" class="text-slate-800">1,500 m²</strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block">동의 참여 서명</span>
+                        <strong id="modalPropSigns" class="text-emerald-600">384 명 동의</strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block">작성일</span>
+                        <strong id="modalPropDate" class="text-slate-800">2026. 09. 23</strong>
+                    </div>
+                </div>
+
+                <!-- Body Text 1: Problem -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-base text-slate-900 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-red-500"></span> 1. 문제 상황 및 현황
+                    </h4>
+                    <p class="text-xs sm:text-sm text-slate-700 leading-relaxed pl-4">
+                        현재 본교 운동장의 모래 입자는 바람이 불 때마다 심각하게 비산되어, 학생들의 안구 질환(결막염, 이물감), 호흡기 불편을 유발하고 있습니다. 또한 모래 먼지가 교실 내부로 유입되어 쾌적한 학습 환경 조성을 저해하고 있는 실정입니다.
+                    </p>
+                </div>
+
+                <!-- Body Text 2: Solution & Expected Benefits -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-base text-slate-900 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 2. 해결 방안 및 기대 효과 (데이터 분석)
+                    </h4>
+                    <p class="text-xs sm:text-sm text-slate-700 leading-relaxed pl-4 mb-2">
+                        그린그라운드 인프라 데이터 계산에 따라 모래 운동장을 친환경 잔디(또는 친환경 완충 매트)로 교체 시 다음과 같은 혁신적 효과가 검증되었습니다.
+                    </p>
+                    <ul class="text-xs sm:text-sm space-y-1.5 pl-8 list-disc text-slate-700">
+                        <li>연간 약 <strong id="modalDustSave" class="text-emerald-700">412.5 kg</strong>의 비산 먼지 발생 차단 효과 (약 88% 감소)</li>
+                        <li>학생 안구 안전 지수 <strong>A+ 등급 (98.4점)</strong> 달성</li>
+                        <li>날씨에 구애받지 않는 연간 <strong id="modalHoursSave" class="text-emerald-700">+180시간</strong>의 야외 체육활동 보장</li>
+                    </ul>
+                </div>
+
+                <!-- Body Text 3: Petition Statement -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-base text-slate-900 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-purple-500"></span> 3. 학교 구성원 의견 수렴 결과
+                    </h4>
+                    <p class="text-xs sm:text-sm text-slate-700 leading-relaxed pl-4">
+                        현재까지 총 <strong id="modalPropSignSummary" class="text-purple-700">384명</strong>의 학생, 교직원, 학부모가 본 서명운동에 자발적으로 참여하였으며, "바람이 불어도 안심하고 운동할 수 있는 깨끗한 학교를 만들어 달라"는 한목소리를 내고 있습니다.
+                    </p>
+                </div>
+
+                <!-- Signoff -->
+                <div class="pt-6 border-t text-center space-y-2">
+                    <p class="text-xs text-slate-500">SDGs Goal 9 학교 인프라 혁신 프로젝트 팀</p>
+                    <p class="text-lg font-black text-slate-900">팀 '1등가자' 및 학교 구성원 일동</p>
+                </div>
+            </div>
+
+            <!-- Modal Action Buttons -->
+            <div class="flex flex-wrap justify-end gap-3 pt-4 border-t no-print">
+                <button onclick="closeProposalModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-50">
+                    닫기
+                </button>
+                <button onclick="copyProposalText()" class="px-4 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5">
+                    <i class="fa-solid fa-copy"></i> 건의서 텍스트 복사
+                </button>
+                <button onclick="printProposalDoc()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-md transition-all flex items-center gap-1.5">
+                    <i class="fa-solid fa-print"></i> 즉시 인쇄 / PDF 저장
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl border border-slate-700 text-xs font-bold hidden transition-all flex items-center gap-2">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toastMsg">메시지 내용</span>
+    </div>
+
+    <script>
+        // Global Application State
+        const state = {
+            groundType: 'sand', // 'sand' or 'grass'
+            windSpeed: 5.0,     // m/s
+            areaSqM: 1500,
+            students: 600,
+            petitionList: [
+                { id: 1, name: '3학년 2반 김학생', msg: '체육 시간마다 눈에 모래 들어가서 눈물이 났어요. 잔디 운동장 꼭 만들어주세요!', time: '10분 전', anon: false },
+                { id: 2, name: '2학년 이*우', msg: '바람 많이 무는 날 창문도 못 열어서 너무 답답해요. 잔디 교체 적극 찬성합니다!', time: '25분 전', anon: true },
+                { id: 3, name: '박*현 선생님', msg: '학생들 야외 활동 시 모래 먼지로 인한 안질환 예방을 위해 지속가능한 인프라 조성이 시급합니다.', time: '1시간 전', anon: true },
+                { id: 4, name: '1학년 5반 정민서', msg: '축구할 때 넘어져도 안 아픈 초록 잔디 운동장이 너무 갖고 싶어요!', time: '2시간 전', anon: false },
+                { id: 5, name: '학부모 동아리 회원', msg: '아이들 건강과 학교 미관을 위해 1등가자 팀의 SDGs 제안을 응원합니다.', time: '3시간 전', anon: true }
+            ],
+            signaturesCount: 384,
+            targetSignatures: 500
+        };
+
+        // Profanity filter list for ethics compliance
+        const badWords = ['바보', '멍청', '나쁜', '욕설', '지옥'];
+
+        // Canvas Setup & Variables
+        let canvas, ctx;
+        let particles = [];
+        let animFrameId;
+
+        // Interactive Moving Student Animation State
+        let studentX = 220;
+        let studentDir = 1; // 1 = facing/moving right, -1 = left
+        let walkCycle = 0;
+
+        window.onload = function() {
+            initCanvas();
+            calculateImpact();
+            renderPetitionList();
+            updatePetitionProgress();
+            
+            // Set initial date in modal
+            const today = new Date();
+            const dateStr = `${today.getFullYear()}. ${String(today.getMonth() + 1).padStart(2, '0')}. ${String(today.getDate()).padStart(2, '0')}`;
+            document.getElementById('modalPropDate').innerText = dateStr;
+        };
+
+        function initCanvas() {
+            canvas = document.getElementById('simCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // Resize canvas to internal display size
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Generate initial particles
+            createParticles();
+
+            // Start animation loop
+            animate();
+        }
+
+        function resizeCanvas() {
+            if (!canvas) return;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width || 640;
+            canvas.height = rect.height || 360;
+        }
+
+        function createParticles() {
+            particles = [];
+            const count = state.groundType === 'sand' ? Math.floor(state.windSpeed * 25) + 20 : Math.floor(state.windSpeed * 4) + 5;
+            
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: state.groundType === 'sand' ? canvas.height - 40 - (Math.random() * (canvas.height * 0.7)) : canvas.height - 20 - (Math.random() * 30),
+                    vx: (Math.random() * 2 + 1) * (state.windSpeed * 0.8 + 0.5),
+                    vy: state.groundType === 'sand' ? (Math.random() - 0.5) * (state.windSpeed * 0.5) : (Math.random() - 0.7) * 0.3,
+                    size: state.groundType === 'sand' ? Math.random() * 3.5 + 1.5 : Math.random() * 4 + 2,
+                    color: state.groundType === 'sand' ? '#f59e0b' : '#34d399',
+                    alpha: Math.random() * 0.7 + 0.3
+                });
+            }
+        }
+
+        function animate() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Background (Sky & School Building)
+            ctx.fillStyle = '#0f172a'; // Night sky
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw School Classroom Building on the right
+            const bldgX = canvas.width - 120;
+            const bldgY = canvas.height - 180;
+            ctx.fillStyle = '#334155';
+            ctx.fillRect(bldgX, bldgY, 110, 160);
+            
+            // Building Windows
+            ctx.fillStyle = '#fef08a';
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 2; c++) {
+                    ctx.fillRect(bldgX + 15 + c * 45, bldgY + 20 + r * 35, 30, 20);
+                }
+            }
+
+            // Draw Ground Base
+            const groundY = canvas.height - 30;
+            if (state.groundType === 'sand') {
+                // Sand Ground Style
+                ctx.fillStyle = '#d97706';
+                ctx.fillRect(0, groundY, canvas.width, 30);
+                // Sand surface texture
+                ctx.fillStyle = '#b45309';
+                ctx.fillRect(0, groundY, canvas.width, 4);
+            } else {
+                // Eco Grass Ground Style
+                ctx.fillStyle = '#059669';
+                ctx.fillRect(0, groundY, canvas.width, 30);
+                
+                // Draw grass blades
+                ctx.strokeStyle = '#34d399';
+                ctx.lineWidth = 2;
+                for (let x = 0; x < canvas.width; x += 8) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, groundY);
+                    ctx.lineTo(x + (Math.sin(Date.now() * 0.005 + x) * state.windSpeed), groundY - 12);
+                    ctx.stroke();
+                }
+            }
+
+            // Draw Soccer Goalpost on the left side of the field
+            drawSoccerGoal(40, groundY);
+
+            // Draw Interactive Realistic Moving Student Avatar on Field
+            updateAndDrawStudent(groundY);
+
+            // Warning Dust Cloud overlay in high-wind sand mode
+            if (state.groundType === 'sand' && state.windSpeed > 3) {
+                ctx.fillStyle = 'rgba(217, 119, 6, 0.15)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            // Move and render dust/leaf particles
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // Loop particles when off screen
+                if (p.x > canvas.width) {
+                    p.x = -10;
+                    p.y = state.groundType === 'sand' ? canvas.height - 35 - (Math.random() * (canvas.height * 0.65)) : canvas.height - 20 - (Math.random() * 20);
+                }
+
+                // Render particle
+                ctx.save();
+                ctx.globalAlpha = p.alpha;
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            // Update stats overlay text
+            document.getElementById('dustParticleCount').innerText = `${particles.length * (state.groundType === 'sand' ? 8 : 1)} particles`;
+            const dangerVal = state.groundType === 'sand' ? Math.min(100, Math.round(state.windSpeed * 9.5)) : 2;
+            document.getElementById('eyeDangerScore').innerText = `${dangerVal}% (${dangerVal > 40 ? '위험' : '안전'})`;
+            document.getElementById('eyeDangerScore').className = `text-base font-extrabold ${dangerVal > 40 ? 'text-red-500' : 'text-emerald-500'}`;
+
+            animFrameId = requestAnimationFrame(animate);
+        }
+
+        // Realistic Moving Student Character with Detailed Face, Arms, Legs & Pain Actions
+        function updateAndDrawStudent(groundY) {
+            const isSandDistress = (state.groundType === 'sand' && state.windSpeed > 1.5);
+
+            // Update movement position back and forth across field
+            if (isSandDistress) {
+                // Stagger/slow movement while rubbing eyes in discomfort
+                studentX += Math.sin(Date.now() * 0.005) * 0.3 * studentDir;
+                if (studentX < 110) studentX = 110;
+                if (studentX > canvas.width - 160) studentX = canvas.width - 160;
+                walkCycle += 0.05;
+            } else {
+                // Normal walking/running back and forth
+                const speed = state.groundType === 'grass' ? 1.8 : 1.2;
+                studentX += speed * studentDir;
+
+                const minX = 110;
+                const maxX = canvas.width - 160;
+                if (studentX > maxX) {
+                    studentX = maxX;
+                    studentDir = -1;
+                } else if (studentX < minX) {
+                    studentX = minX;
+                    studentDir = 1;
+                }
+                walkCycle += 0.15;
+            }
+
+            const x = studentX;
+            const headY = groundY - 44;
+            const legLen = 14;
+
+            ctx.save();
+
+            // 1. Shadow
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+            ctx.beginPath();
+            ctx.ellipse(x, groundY - 2, 12, 4, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Leg angles based on walk cycle
+            const legAngle1 = isSandDistress ? Math.sin(walkCycle) * 0.2 : Math.sin(walkCycle) * 0.6;
+            const legAngle2 = -legAngle1;
+
+            // 2. Legs & Shoes
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+
+            // Leg 1 (Back)
+            ctx.strokeStyle = state.groundType === 'sand' ? '#92400e' : '#1e3a8a';
+            ctx.beginPath();
+            ctx.moveTo(x - 3, groundY - 16);
+            ctx.lineTo(x - 3 + Math.sin(legAngle1) * legLen, groundY - 2);
+            ctx.stroke();
+
+            // Shoe 1
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(x - 5 + Math.sin(legAngle1) * legLen, groundY - 3, 7, 3);
+
+            // Leg 2 (Front)
+            ctx.beginPath();
+            ctx.moveTo(x + 3, groundY - 16);
+            ctx.lineTo(x + 3 + Math.sin(legAngle2) * legLen, groundY - 2);
+            ctx.stroke();
+
+            // Shoe 2
+            ctx.fillRect(x + 1 + Math.sin(legAngle2) * legLen, groundY - 3, 7, 3);
+
+            // 3. Clothes / Torso
+            ctx.fillStyle = isSandDistress ? '#dc2626' : (state.groundType === 'grass' ? '#0284c7' : '#d97706');
+            if (ctx.roundRect) {
+                ctx.beginPath();
+                ctx.roundRect(x - 9, groundY - 33, 18, 18, 4);
+                ctx.fill();
+            } else {
+                ctx.fillRect(x - 9, groundY - 33, 18, 18);
+            }
+
+            // 4. Arms & Hands
+            ctx.strokeStyle = '#fed7aa'; // skin tone
+            ctx.lineWidth = 3.5;
+
+            if (isSandDistress) {
+                // Rubbing eyes action: hands up at face level with scrubbing animation
+                const rubOffset = Math.sin(Date.now() * 0.02) * 3;
+                
+                // Left Arm
+                ctx.beginPath();
+                ctx.moveTo(x - 7, groundY - 28);
+                ctx.lineTo(x - 3 + rubOffset, headY + 2);
+                ctx.stroke();
+
+                // Right Arm
+                ctx.beginPath();
+                ctx.moveTo(x + 7, groundY - 28);
+                ctx.lineTo(x + 3 - rubOffset, headY + 2);
+                ctx.stroke();
+
+                // Hands
+                ctx.fillStyle = '#fed7aa';
+                ctx.beginPath();
+                ctx.arc(x - 3 + rubOffset, headY + 2, 3, 0, Math.PI * 2);
+                ctx.arc(x + 3 - rubOffset, headY + 2, 3, 0, Math.PI * 2);
+                ctx.fill();
+            } else {
+                // Swinging arms while running/walking
+                const armAngle = Math.sin(walkCycle) * 0.5 * studentDir;
+                ctx.beginPath();
+                ctx.moveTo(x - 6, groundY - 30);
+                ctx.lineTo(x - 6 - Math.sin(armAngle) * 12, groundY - 18);
+                ctx.moveTo(x + 6, groundY - 30);
+                ctx.lineTo(x + 6 + Math.sin(armAngle) * 12, groundY - 18);
+                ctx.stroke();
+            }
+
+            // 5. Head & Hair
+            ctx.fillStyle = '#fed7aa'; // warm skin tone
+            ctx.beginPath();
+            ctx.arc(x, headY, 10, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Hair
+            ctx.fillStyle = '#1e293b';
+            ctx.beginPath();
+            ctx.arc(x, headY - 2, 10, Math.PI * 0.8, Math.PI * 2.2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(x - 3, headY - 7, 5, 0, Math.PI);
+            ctx.arc(x + 3, headY - 7, 5, 0, Math.PI);
+            ctx.fill();
+
+            // 6. Facial Features (Eyes, Nose, Mouth, Tears, Speech Bubble)
+            if (isSandDistress) {
+                // Pain expression (>_<)
+                ctx.strokeStyle = '#b91c1c';
+                ctx.lineWidth = 2;
+
+                // Eye '>'
+                ctx.beginPath();
+                ctx.moveTo(x - 6, headY - 3);
+                ctx.lineTo(x - 3, headY - 1);
+                ctx.lineTo(x - 6, headY + 1);
+                ctx.stroke();
+
+                // Eye '<'
+                ctx.beginPath();
+                ctx.moveTo(x + 6, headY - 3);
+                ctx.lineTo(x + 3, headY - 1);
+                ctx.lineTo(x + 6, headY + 1);
+                ctx.stroke();
+
+                // Nose
+                ctx.fillStyle = '#ea580c';
+                ctx.fillRect(x - 0.5, headY + 1, 1, 2);
+
+                // Mouth (Distressed open crying mouth)
+                ctx.fillStyle = '#991b1b';
+                ctx.beginPath();
+                ctx.arc(x, headY + 5, 3, 0, Math.PI);
+                ctx.fill();
+
+                // Animated Tear Drops
+                const tearY = headY + 3 + ((Date.now() * 0.01) % 8);
+                ctx.fillStyle = '#38bdf8';
+                ctx.beginPath();
+                ctx.arc(x - 5, tearY, 1.5, 0, Math.PI * 2);
+                ctx.arc(x + 5, tearY, 1.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Crying Speech Bubble
+                drawSpeechBubble(ctx, x, headY - 18, "아악! 눈 아파요! 😭", "#fef2f2", "#ef4444");
+            } else {
+                // Happy Expression
+                const eyeLookX = studentDir * 1.5;
+
+                // Eyes with Pupils
+                ctx.fillStyle = '#0f172a';
+                ctx.beginPath();
+                ctx.arc(x - 3.5 + eyeLookX, headY - 1, 2, 0, Math.PI * 2);
+                ctx.arc(x + 3.5 + eyeLookX, headY - 1, 2, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Eye Highlights
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(x - 4 + eyeLookX, headY - 2, 0.7, 0, Math.PI * 2);
+                ctx.arc(x + 3 + eyeLookX, headY - 2, 0.7, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Rosy Cheeks
+                ctx.fillStyle = 'rgba(244, 63, 94, 0.4)';
+                ctx.beginPath();
+                ctx.arc(x - 5, headY + 2, 2.5, 0, Math.PI * 2);
+                ctx.arc(x + 5, headY + 2, 2.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Nose
+                ctx.fillStyle = '#d97706';
+                ctx.fillRect(x - 0.5, headY + 1, 1, 1.5);
+
+                // Mouth (Happy Smile)
+                ctx.strokeStyle = '#059669';
+                ctx.lineWidth = 1.8;
+                ctx.beginPath();
+                ctx.arc(x, headY + 3, 3.5, 0.1, Math.PI - 0.1);
+                ctx.stroke();
+
+                // Cheerful Speech Bubble
+                if (state.groundType === 'grass') {
+                    drawSpeechBubble(ctx, x, headY - 18, "잔디라 눈 안 아파요! ✨", "#ecfdf5", "#059669");
+                }
+            }
+
+            ctx.restore();
+        }
+
+        // Speech Bubble Helper
+        function drawSpeechBubble(ctx, x, y, text, bgColor, borderColor) {
+            ctx.font = "bold 10px 'Noto Sans KR', sans-serif";
+            const textWidth = ctx.measureText(text).width;
+            const padX = 6;
+            const padY = 3;
+            const bw = textWidth + padX * 2;
+            const bh = 16;
+            const bx = x - bw / 2;
+            const by = y - bh;
+
+            ctx.save();
+            ctx.fillStyle = bgColor;
+            ctx.strokeStyle = borderColor;
+            ctx.lineWidth = 1.5;
+
+            if (ctx.roundRect) {
+                ctx.beginPath();
+                ctx.roundRect(bx, by, bw, bh, 6);
+                ctx.fill();
+                ctx.stroke();
+            } else {
+                ctx.fillRect(bx, by, bw, bh);
+                ctx.strokeRect(bx, by, bw, bh);
+            }
+
+            // Tail
+            ctx.beginPath();
+            ctx.moveTo(x - 3, by + bh);
+            ctx.lineTo(x, by + bh + 4);
+            ctx.lineTo(x + 3, by + bh);
+            ctx.fillStyle = bgColor;
+            ctx.fill();
+            ctx.strokeStyle = borderColor;
+            ctx.stroke();
+
+            // Text
+            ctx.fillStyle = borderColor;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(text, x, by + bh / 2);
+
+            ctx.restore();
+        }
+
+        // Helper function to render a realistic Soccer Goalpost on Canvas
+        function drawSoccerGoal(x, groundY) {
+            const goalW = 60;
+            const goalH = 65;
+            const depth = 20;
+            const topY = groundY - goalH;
+
+            // Goal Net Grid Backing
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+
+            // Vertical Net lines
+            for (let nx = x - depth; nx <= x; nx += 8) {
+                ctx.moveTo(nx, topY + (x - nx) * 0.5);
+                ctx.lineTo(nx, groundY);
+            }
+            for (let nx = x; nx <= x + goalW; nx += 10) {
+                ctx.moveTo(nx, topY);
+                ctx.lineTo(nx, groundY);
+            }
+
+            // Horizontal Net lines
+            for (let ny = topY; ny <= groundY; ny += 8) {
+                ctx.moveTo(x - depth, ny);
+                ctx.lineTo(x + goalW, ny);
+            }
+            ctx.stroke();
+
+            // Goal Frame Posts (White, Thick Lines)
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 3.5;
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+
+            // Back support frame
+            ctx.moveTo(x - depth, groundY);
+            ctx.lineTo(x - depth, topY + 10);
+            ctx.lineTo(x, topY);
+
+            // Front Main Posts and Crossbar
+            ctx.moveTo(x, groundY);
+            ctx.lineTo(x, topY);
+            ctx.lineTo(x + goalW, topY);
+            ctx.lineTo(x + goalW, groundY);
+
+            ctx.stroke();
+        }
+
+        // GROUND & WIND CONTROL FUNCTIONS
+        function setGroundType(type) {
+            state.groundType = type;
+            const btnSand = document.getElementById('btnSandType');
+            const btnGrass = document.getElementById('btnGrassType');
+            const label = document.getElementById('canvasModeLabel');
+            const riskCard = document.getElementById('simRiskCard');
+            const riskTitle = document.getElementById('simRiskTitle');
+            const riskDesc = document.getElementById('simRiskDesc');
+            const riskIcon = document.getElementById('simRiskIcon');
+
+            if (type === 'sand') {
+                btnSand.className = "py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 bg-amber-500 text-white shadow-sm";
+                btnGrass.className = "py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:text-slate-900";
+                label.innerText = "기존 인프라: 모래 운동장";
+                label.className = "px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold rounded-full";
+
+                riskCard.className = "p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 space-y-1";
+                riskTitle.innerText = "경고: 안구 이물질 및 질환 위험";
+                riskDesc.innerText = "강한 바람으로 모래 먼지가 비산되어 학생들의 안구 건조 및 상처 유발 위험이 높습니다.";
+                riskIcon.className = "fa-solid fa-triangle-exclamation text-amber-600";
+            } else {
+                btnGrass.className = "py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 bg-emerald-600 text-white shadow-sm";
+                btnSand.className = "py-2.5 px-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:text-slate-900";
+                label.innerText = "혁신 인프라: 친환경 잔디";
+                label.className = "px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold rounded-full";
+
+                riskCard.className = "p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 space-y-1";
+                riskTitle.innerText = "안전: 쾌적하고 깨끗한 청정 공간";
+                riskDesc.innerText = "잔디 인프라로 비산 먼지를 차단하여 바람이 불어도 눈을 보호하고 자유로운 야외활동이 가능합니다.";
+                riskIcon.className = "fa-solid fa-circle-check text-emerald-600";
+            }
+
+            createParticles();
+        }
+
+        function updateWindSpeed(val) {
+            state.windSpeed = parseFloat(val);
+            document.getElementById('windSpeedValue').innerText = `${state.windSpeed.toFixed(1)} m/s`;
+            document.getElementById('canvasWindText').innerText = `${state.windSpeed.toFixed(1)} m/s`;
+            createParticles();
+        }
+
+        // CALCULATOR LOGIC
+        function calculateImpact() {
+            const area = parseInt(document.getElementById('areaSlider').value);
+            const students = parseInt(document.getElementById('studentSlider').value);
+            
+            state.areaSqM = area;
+            state.students = students;
+
+            document.getElementById('areaValText').innerText = `${area.toLocaleString()} m²`;
+            document.getElementById('studentValText').innerText = `${students.toLocaleString()} 명`;
+
+            // Dynamic Metrics Formulas
+            const dustReductionKg = (area * 0.275).toFixed(1);
+            const protectedHours = Math.round((students * 0.15) + 90);
+            const satisfaction = Math.min(99.5, (90 + (area / 500)).toFixed(1));
+
+            document.getElementById('calcDustResult').innerText = `${dustReductionKg} kg/연`;
+            document.getElementById('calcEyeResult').innerText = `98.4 점 (A+)`;
+            document.getElementById('calcHoursResult').innerText = `+ ${protectedHours} 시간`;
+            document.getElementById('calcSatisfyResult').innerText = `${satisfaction} %`;
+
+            // Update Proposal Modal preview placeholders
+            document.getElementById('modalPropArea').innerText = `${area.toLocaleString()} m²`;
+            document.getElementById('modalDustSave').innerText = `${dustReductionKg} kg`;
+            document.getElementById('modalHoursSave').innerText = `+${protectedHours}시간`;
+        }
+
+        function setCalcPreset(area, students) {
+            document.getElementById('areaSlider').value = area;
+            document.getElementById('studentSlider').value = students;
+            calculateImpact();
+            showToast(`학교 사례 적용: 면적 ${area}m², 전교생 ${students}명`);
+        }
+
+        // RISK DIAGNOSTIC PRESETS
+        function setWeatherPreset(type, speed) {
+            updateWindSpeed(speed);
+            document.getElementById('windSlider').value = speed;
+            
+            // Update button styles
+            const btns = document.querySelectorAll('.weather-btn');
+            btns.forEach(b => {
+                b.className = "weather-btn px-4 py-2.5 rounded-2xl border font-bold text-xs sm:text-sm transition-all flex items-center gap-2 bg-white text-slate-800 border-slate-200";
+            });
+            event.currentTarget.className = "weather-btn active px-4 py-2.5 rounded-2xl border font-bold text-xs sm:text-sm transition-all flex items-center gap-2 bg-white text-slate-800 border-emerald-500 shadow-sm";
+
+            const sandBadge = document.getElementById('sandRiskBadge');
+            const sandRec = document.getElementById('sandActionRec');
+
+            if (speed > 8) {
+                sandBadge.innerText = "위험 경보";
+                sandBadge.className = "px-2.5 py-1 rounded-full bg-red-600 text-white text-xs font-bold animate-pulse";
+                sandRec.innerText = "모래 운동장 사용 즉시 중단 및 실내 활동 전환";
+            } else if (speed > 4) {
+                sandBadge.innerText = "주의 요망";
+                sandBadge.className = "px-2.5 py-1 rounded-full bg-amber-500 text-white text-xs font-bold";
+                sandRec.innerText = "야외 체육활동 시 안구 보호 주의";
+            } else {
+                sandBadge.innerText = "보통";
+                sandBadge.className = "px-2.5 py-1 rounded-full bg-sky-500 text-white text-xs font-bold";
+                sandRec.innerText = "제한적 야외활동 가능";
+            }
+        }
+
+        // PETITION & VOICE BOX LOGIC
+        function toggleAnonInput(isAnon) {
+            const nameGroup = document.getElementById('nameInputGroup');
+            const nameInput = document.getElementById('signerName');
+            if (isAnon) {
+                nameGroup.style.opacity = '0.5';
+                nameInput.value = '익명 참여자';
+                nameInput.disabled = true;
+            } else {
+                nameGroup.style.opacity = '1';
+                nameInput.value = '';
+                nameInput.disabled = false;
+            }
+        }
+
+        function handlePetitionSubmit(e) {
+            e.preventDefault();
+            const isAnon = document.getElementById('anonCheck').checked;
+            let name = document.getElementById('signerName').value.trim();
+            const msg = document.getElementById('signerMessage').value.trim();
+
+            if (!msg) return;
+
+            // Profanity Check
+            const hasBadWord = badWords.some(word => msg.includes(word) || name.includes(word));
+            if (hasBadWord) {
+                showToast("윤리 정책 안내: 건전한 소통을 위해 비속어나 비방 단어는 사용할 수 없습니다.", "error");
+                return;
+            }
+
+            if (isAnon) {
+                name = name.charAt(0) + "** (익명)";
+            }
+
+            // Add signature
+            state.signaturesCount += 1;
+            state.petitionList.unshift({
+                id: Date.now(),
+                name: name,
+                msg: msg,
+                time: '방금 전',
+                anon: isAnon
+            });
+
+            // Reset form
+            document.getElementById('signerMessage').value = '';
+            if (!isAnon) document.getElementById('signerName').value = '';
+
+            // Update UI
+            renderPetitionList();
+            updatePetitionProgress();
+            showToast("서명이 성공적으로 등록되었습니다! 감사합니다.");
+        }
+
+        function renderPetitionList() {
+            const container = document.getElementById('petitionList');
+            container.innerHTML = state.petitionList.map(item => `
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5 hover:bg-slate-100/60 transition-colors">
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="font-bold text-slate-800 flex items-center gap-1.5">
+                            <i class="fa-solid fa-user-circle text-purple-500"></i> ${escapeHtml(item.name)}
+                        </span>
+                        <span class="text-slate-400 text-[11px]">${item.time}</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                        "${escapeHtml(item.msg)}"
+                    </p>
+                </div>
+            `).join('');
+        }
+
+        function updatePetitionProgress() {
+            const count = state.signaturesCount;
+            const percent = Math.min(100, ((count / state.targetSignatures) * 100)).toFixed(1);
+
+            document.getElementById('currentSignCount').innerText = count;
+            document.getElementById('petitionTargetPercent').innerText = `${percent}%`;
+            document.getElementById('petitionProgressBar').style.width = `${percent}%`;
+
+            // Update modal summary as well
+            document.getElementById('modalPropSigns').innerText = `${count} 명 동의`;
+            document.getElementById('modalPropSignSummary').innerText = `${count}명`;
+        }
+
+        // MODAL & PRINT HANDLERS
+        function openProposalModal() {
+            document.getElementById('proposalModal').classList.remove('hidden');
+        }
+
+        function closeProposalModal() {
+            document.getElementById('proposalModal').classList.add('hidden');
+        }
+
+        function copyProposalText() {
+            const area = state.areaSqM;
+            const signs = state.signaturesCount;
+            const dust = (area * 0.275).toFixed(1);
+
+            const text = `[SDGs #9 기반 학교 잔디 운동장 인프라 개선 건의서]
+제안 팀: 1등가자
+대상 학교 운동장 면적: ${area} m²
+참여 서명 인원: ${signs}명 동의
+
+1. 문제 상황: 모래 먼지 날림으로 인한 학생 안구 질환(결막염, 이물감) 유발 및 교실 유입 오염.
+2. 기대 효과: 연간 ${dust}kg 비산 먼지 감축 (88% 감소), 학생 안구 안전 지수 A+ 달성.
+3. 요청 사항: 모래 운동장을 친환경 잔디 운동장으로 혁신적인 인프라 교체 요청.
+
+- 팀 1등가자 및 학교 구성원 일동 -`;
+
+            // Fallback execCommand for copy
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast("제안서 요약 텍스트가 클립보드에 복사되었습니다!");
+            } catch (err) {
+                showToast("복사 중 오류가 발생했습니다.", "error");
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function printProposalDoc() {
+            window.print();
+        }
+
+        // TOAST NOTIFICATION UTILITY
+        function showToast(msg, type = "success") {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.innerText = msg;
+            if (type === "error") {
+                toastIcon.className = "fa-solid fa-circle-exclamation text-red-400";
+            } else {
+                toastIcon.className = "fa-solid fa-circle-check text-emerald-400";
+            }
+
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
